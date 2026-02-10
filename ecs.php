@@ -6,6 +6,7 @@ use PhpCsFixer\Fixer\ArrayNotation\NoWhitespaceBeforeCommaInArrayFixer;
 use PhpCsFixer\Fixer\ArrayNotation\WhitespaceAfterCommaInArrayFixer;
 use PhpCsFixer\Fixer\ControlStructure\TrailingCommaInMultilineFixer;
 use PhpCsFixer\Fixer\FunctionNotation\MethodArgumentSpaceFixer;
+use PhpCsFixer\Fixer\Import\GlobalNamespaceImportFixer;
 use PhpCsFixer\Fixer\Operator\BinaryOperatorSpacesFixer;
 use PhpCsFixer\Fixer\Operator\ConcatSpaceFixer;
 use Symplify\EasyCodingStandard\Config\ECSConfig;
@@ -38,5 +39,10 @@ return ECSConfig::configure()
     ])
     ->withConfiguredRule(BinaryOperatorSpacesFixer::class, [
         'default' => 'single_space',
+    ])
+    ->withConfiguredRule(GlobalNamespaceImportFixer::class, [
+        'import_classes' => true,
+        'import_constants' => true,
+        'import_functions' => true,
     ])
 ;
