@@ -1,0 +1,149 @@
+{
+    "type": "project",
+    "license": "MIT",
+    "require": {
+        "php": ">=8.4",
+        "ext-ctype": "*",
+        "ext-iconv": "*",
+        "api-platform/doctrine-orm": "^4.1.0",
+        "api-platform/symfony": "^4.1.0",
+        "doctrine/doctrine-bundle": "^3",
+        "doctrine/doctrine-migrations-bundle": "^3.2",
+        "doctrine/orm": "^3.0",
+        "nelmio/cors-bundle": "^2.2",
+        "phpstan/phpdoc-parser": "^2.0",
+        "runtime/frankenphp-symfony": "^0.2",
+        "symfony/asset": "7.4.*",
+        "symfony/console": "7.4.*",
+        "symfony/dotenv": "7.4.*",
+        "symfony/expression-language": "7.4.*",
+        "symfony/flex": "^2.2",
+        "symfony/framework-bundle": "7.4.*",
+        "symfony/mercure-bundle": "^0.3.5",
+        "symfony/monolog-bundle": "^3.8",
+        "symfony/property-access": "7.4.*",
+        "symfony/property-info": "7.4.*",
+        "symfony/runtime": "7.4.*",
+        "symfony/security-bundle": "7.4.*",
+        "symfony/serializer": "7.4.*",
+        "symfony/twig-bundle": "7.4.*",
+        "symfony/validator": "7.4.*",
+        "symfony/yaml": "7.4.*"
+    },
+    "require-dev": {
+        "api-platform/schema-generator": "^5.0",
+        "friendsofphp/php-cs-fixer": "^3.93",
+        "phpstan/phpstan": "^2.1",
+        "phpstan/phpstan-deprecation-rules": "^2.0",
+        "phpstan/phpstan-doctrine": "^2.0",
+        "phpstan/phpstan-phpunit": "^2.0",
+        "phpstan/phpstan-strict-rules": "^2.0",
+        "phpstan/phpstan-symfony": "^2.0",
+        "rector/rector": "^2.3",
+        "symfony/browser-kit": "7.4.*",
+        "symfony/css-selector": "7.4.*",
+        "symfony/debug-bundle": "7.4.*",
+        "symfony/maker-bundle": "^1.44",
+        "symfony/phpunit-bridge": "7.4.*",
+        "symfony/stopwatch": "7.4.*",
+        "symfony/var-dumper": "7.4.*",
+        "symfony/web-profiler-bundle": "7.4.*",
+        "symplify/easy-coding-standard": "^13.0",
+        "symplify/phpstan-rules": "^14.9"
+    },
+    "config": {
+        "allow-plugins": {
+            "symfony/flex": true,
+            "symfony/runtime": true
+        },
+        "audit": {
+            "abandoned": "report",
+            "block-insecure": false,
+            "block-abandoned": true
+        },
+        "optimize-autoloader": true,
+        "platform": {
+            "php": "8.4.17"
+        },
+        "preferred-install": {
+            "*": "dist"
+        },
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "App\\Tests\\": "tests/"
+        }
+    },
+    "replace": {
+        "paragonie/random_compat": "2.*",
+        "symfony/polyfill-ctype": "*",
+        "symfony/polyfill-iconv": "*",
+        "symfony/polyfill-intl-grapheme": "*",
+        "symfony/polyfill-intl-normalizer": "*",
+        "symfony/polyfill-mbstring": "*",
+        "symfony/polyfill-php84": "*",
+        "symfony/polyfill-php83": "*",
+        "symfony/polyfill-php82": "*",
+        "symfony/polyfill-php81": "*",
+        "symfony/polyfill-php80": "*"
+    },
+    "scripts": {
+        "auto-scripts": {
+            "cache:clear": "symfony-cmd",
+            "assets:install %PUBLIC_DIR%": "symfony-cmd"
+        },
+        "post-install-cmd": [
+            "@auto-scripts"
+        ],
+        "post-update-cmd": [
+            "@auto-scripts"
+        ],
+        "phpstan:base": "vendor/bin/phpstan analyse -c phpstan.dist.neon --generate-baseline",
+        "phpstan:cc": "vendor/bin/phpstan clear-result-cache -c phpstan.dist.neon",
+        "phpstan:check": "vendor/bin/phpstan analyse -c phpstan.dist.neon --memory-limit=1G -vv",
+        "phpstan:check:no-cache": [
+            "@phpstan:cc",
+            "@phpstan:check"
+        ],
+        "phpstan:fix": "@phpstan:check --fix --no-interaction",
+        "rector:check": "@rector:fix --dry-run",
+        "rector:check:no-cache": "@rector:check --clear-cache",
+        "rector:fix": "vendor/bin/rector process -c rector.php --ansi --memory-limit=1G",
+        "rector:fix:no-cache": "@rector:fix --clear-cache",
+        "ecs:check": "vendor/bin/ecs check -c ecs.php --ansi --memory-limit=1G -vv",
+        "ecs:check:no-cache": "@ecs:check --clear-cache",
+        "ecs:fix": "@ecs:check --fix --no-interaction",
+        "ecs:fix:no-cache": "@ecs:check --fix --no-interaction --clear-cache"
+    },
+    "scripts-descriptions": {
+        "phpstan:base": "Generate a PHPStan baseline file to suppress existing errors.",
+        "phpstan:cc": "Clear the PHPStan result cache.",
+        "phpstan:check": "Run PHPStan static analysis.",
+        "phpstan:check:no-cache": "Run a fresh PHPStan static analysis (without cache).",
+        "phpstan:fix": "Automatically fix possible violations using PHPStan.",
+        "rector:check": "Run Rector analysis in dry-run mode to preview proposed code upgrades and refactorings.",
+        "rector:check:no-cache": "Run a fresh Rector analysis (ignoring cache).",
+        "rector:fix": "Apply automated code upgrades and refactorings with Rector.",
+        "rector:fix:no-cache": "Apply automated code upgrades and refactorings with Rector (ignoring cache).",
+        "ecs:check": "Run ECS analysis to check coding style and formatting violations.",
+        "ecs:check:no-cache": "Run a fresh ECS analysis (without cache).",
+        "ecs:fix": "Automatically fix coding style and formatting issues using ECS.",
+        "ecs:fix:no-cache": "Automatically fix coding style and formatting issues using ECS (without cache)."
+    },
+    "conflict": {
+        "symfony/symfony": "*"
+    },
+    "extra": {
+        "symfony": {
+            "allow-contrib": false,
+            "require": "7.4.*",
+            "docker": false
+        }
+    }
+}

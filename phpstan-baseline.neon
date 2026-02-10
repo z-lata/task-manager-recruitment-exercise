@@ -1,0 +1,91 @@
+parameters:
+	ignoreErrors:
+		-
+			rawMessage: '"@include \dirname(__DIR__) . ''/.env.local.php''" is forbidden to use'
+			identifier: symplify.forbiddenNode
+			count: 2
+			path: config/bootstrap.php
+
+		-
+			rawMessage: Cannot cast mixed to int.
+			identifier: cast.int
+			count: 1
+			path: config/bootstrap.php
+
+		-
+			rawMessage: 'Function "class_exists()" cannot be used/left in the code: use ReflectionProvider->has*() instead'
+			identifier: symplify.forbiddenFuncCall
+			count: 1
+			path: config/bootstrap.php
+
+		-
+			rawMessage: 'Only booleans are allowed in ||, int given on the left side.'
+			identifier: booleanOr.leftNotBoolean
+			count: 1
+			path: config/bootstrap.php
+
+		-
+			rawMessage: Short ternary operator is not allowed. Use null coalesce operator if applicable or consider using long ternary.
+			identifier: ternary.shortNotAllowed
+			count: 1
+			path: config/bootstrap.php
+
+		-
+			rawMessage: Offset 'APP_DEBUG' might not exist on array.
+			identifier: offsetAccess.notFound
+			count: 1
+			path: public/index.php
+
+		-
+			rawMessage: Offset 'APP_ENV' might not exist on array.
+			identifier: offsetAccess.notFound
+			count: 1
+			path: public/index.php
+
+		-
+			rawMessage: 'Parameter #1 $environment of class App\Kernel constructor expects string, mixed given.'
+			identifier: argument.type
+			count: 1
+			path: public/index.php
+
+		-
+			rawMessage: 'Dynamic call to static method ApiPlatform\Symfony\Bundle\Test\ApiTestCase::assertJsonContains().'
+			identifier: staticMethod.dynamicCall
+			count: 1
+			path: tests/Api/GreetingsTest.php
+
+		-
+			rawMessage: 'Dynamic call to static method ApiPlatform\Symfony\Bundle\Test\ApiTestCase::assertResponseStatusCodeSame().'
+			identifier: staticMethod.dynamicCall
+			count: 1
+			path: tests/Api/GreetingsTest.php
+
+		-
+			rawMessage: 'Call to function method_exists() with ''Symfony\\Component\\Dotenv\\Dotenv'' and ''bootEnv'' will always evaluate to true.'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: tests/bootstrap.php
+
+		-
+			rawMessage: 'Function "method_exists()" cannot be used/left in the code'
+			identifier: symplify.forbiddenFuncCall
+			count: 1
+			path: tests/bootstrap.php
+
+		-
+			rawMessage: 'Function "method_exists()" cannot be used/left in the code: use ReflectionProvider->has*() instead'
+			identifier: symplify.forbiddenFuncCall
+			count: 1
+			path: tests/bootstrap.php
+
+		-
+			rawMessage: Offset 'APP_DEBUG' might not exist on array<mixed>.
+			identifier: offsetAccess.notFound
+			count: 1
+			path: tests/bootstrap.php
+
+		-
+			rawMessage: 'Only booleans are allowed in an if condition, mixed given.'
+			identifier: if.condNotBoolean
+			count: 1
+			path: tests/bootstrap.php

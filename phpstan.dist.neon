@@ -1,0 +1,55 @@
+includes:
+    - phar://phpstan.phar/conf/bleedingEdge.neon
+    # basic rules
+    - vendor/phpstan/phpstan-strict-rules/rules.neon
+    - vendor/phpstan/phpstan-deprecation-rules/rules.neon
+    - vendor/symplify/phpstan-rules/config/services/services.neon
+    - vendor/symplify/phpstan-rules/config/code-complexity-rules.neon
+    - vendor/symplify/phpstan-rules/config/configurable-rules.neon
+    - vendor/symplify/phpstan-rules/config/naming-rules.neon
+    - vendor/symplify/phpstan-rules/config/static-rules.neon
+    # project specific
+    - vendor/symplify/phpstan-rules/config/rector-rules.neon
+    - vendor/phpstan/phpstan-symfony/extension.neon
+    - vendor/symplify/phpstan-rules/config/symfony-rules.neon
+    - vendor/symplify/phpstan-rules/config/symfony-config-rules.neon
+    - vendor/phpstan/phpstan-doctrine/extension.neon
+    - vendor/symplify/phpstan-rules/config/doctrine-rules.neon
+    - vendor/phpstan/phpstan-phpunit/extension.neon
+    - vendor/symplify/phpstan-rules/config/phpunit-rules.neon
+    # baseline
+    - phpstan-baseline.neon
+
+parameters:
+    level: max
+
+    paths:
+        - config/
+        - public/
+        - src/
+        - tests/
+
+    symfony:
+        containerXmlPath: var/cache/dev/App_KernelDevDebugContainer.xml
+
+    scanDirectories:
+        - var/cache/dev/Symfony/Config
+
+    tmpDir: var/build/phpstan
+
+    parallel:
+        jobSize: 50
+        maximumNumberOfProcesses: 8
+        minimumNumberOfJobsPerProcess: 2
+        processTimeout: 300.0
+
+    reportUnmatchedIgnoredErrors: false
+
+    checkTooWideReturnTypesInProtectedAndPublicMethods: true
+    checkUninitializedProperties: true
+    checkBenevolentUnionTypes: true
+    reportPossiblyNonexistentGeneralArrayOffset: true
+    reportPossiblyNonexistentConstantArrayOffset: true
+    reportAlwaysTrueInLastCondition: true
+    reportAnyTypeWideningInVarTag: true
+    checkMissingOverrideMethodAttribute: true

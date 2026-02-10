@@ -1,0 +1,38 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Entity;
+
+use ApiPlatform\Metadata\ApiResource;
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
+/**
+ * This is a dummy entity. Remove it!
+ */
+#[ApiResource(mercure: true)]
+#[ORM\Entity]
+class Greeting
+{
+    /**
+     * The entity ID.
+     */
+    #[ORM\Id]
+    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\GeneratedValue(strategy: 'SEQUENCE')]
+    private ?int $id = null;
+
+    /**
+     * A nice person.
+     */
+    #[ORM\Column]
+    #[Assert\NotBlank]
+    public string $name = '';
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+}
