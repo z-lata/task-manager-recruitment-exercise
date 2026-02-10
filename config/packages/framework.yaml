@@ -6,6 +6,16 @@ framework:
     trusted_hosts: '%env(TRUSTED_HOSTS)%'
     # See https://caddyserver.com/docs/caddyfile/directives/reverse_proxy#headers
     trusted_headers: [ 'x-forwarded-for', 'x-forwarded-proto' ]
+    
+    http_client:
+        default_options:
+            headers:
+                Accept: 'application/json'
+                'Content-Type': 'application/json'
+        
+        scoped_clients:
+            jsonPlaceholder.client:
+                base_uri: '%env(JSON_PLACEHOLDER_BASE_URL)%'
 
     # Note that the session will be started ONLY if you read or write from it.
     #session: true
