@@ -20,20 +20,64 @@ To maintain the highest code standards and automate refactoring, this project us
 
 ### Docker
 
+#### Building the Project
+
 ```shell
 docker compose build --pull --no-cache
 ```
+
+#### Starting the Project
 
 ```shell
 docker compose up -d --wait
 ```
 
+#### Stopping the Project
+
 ```shell
 docker compose down --remove-orphans -v
 ```
 
+#### Accessing the Container
+
 ```shell
 docker exec -it api bash
+```
+
+### Loading Dummy Data
+
+Load test users from the API [JSONPlaceholder](https://jsonplaceholder.typicode.com/):
+
+#### Quick Load (Recommended)
+
+```shell
+docker exec -it api php bin/console doctrine:fixtures:load --no-interaction --purge-with-truncate
+```
+
+#### Step-by-Step Guide
+
+##### Step 1: Access the Container
+
+```shell
+docker exec -it api bash
+```
+
+##### Step 2: Create the Database
+
+```shell
+php bin/console doctrine:database:create --if-not-exists --no-interaction
+```
+
+##### Step 3: Run Migrations
+
+```shell
+php bin/console doctrine:migrations:migrate --no-interaction
+```
+
+##### Step 4: Load Fixtures
+
+```shell
+php bin/console doctrine:fixtures:load --no-interaction --purge-with-truncate
 ```
 
 ### Static Code Analysis & Formatting
