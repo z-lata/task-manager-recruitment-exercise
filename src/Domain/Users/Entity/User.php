@@ -7,11 +7,15 @@ namespace App\Domain\Users\Entity;
 use App\Infrastructure\Users\Persistence\Doctrine\UserRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use LogicException;
+use Override;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: 'user', schema: 'users')]
-class User
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -76,6 +80,7 @@ class User
         return $this->email;
     }
 
+    #[Override]
     public function getPassword(): string
     {
         return $this->password;
@@ -99,5 +104,33 @@ class User
     public function getCompany(): Company
     {
         return $this->company;
+    }
+
+    /**
+     * @return string[]
+     */
+    #[Override]
+    public function getRoles(): array
+    {
+        return ['ROLE_USER'];
+    }
+
+    #[Override]
+    public function eraseCredentials(): void
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+    }
+
+    /**
+     * @return non-empty-string
+     */
+    #[Override]
+    public function getUserIdentifier(): string
+    {
+        if ('' === $this->email) {
+            throw new LogicException('User email cannot be empty.');
+        }
+
+        return $this->email;
     }
 }

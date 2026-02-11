@@ -6,6 +6,7 @@ use ApiPlatform\Symfony\Bundle\ApiPlatformBundle;
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle;
 use Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle;
+use Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle;
 use Nelmio\CorsBundle\NelmioCorsBundle;
 use Symfony\Bundle\DebugBundle\DebugBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
@@ -58,5 +59,8 @@ return [
     DoctrineFixturesBundle::class => [
         'dev' => true,
         'test' => true,
+    ],
+    LexikJWTAuthenticationBundle::class => [
+        'all' => true,
     ],
 ];
