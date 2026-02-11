@@ -53,3 +53,7 @@ parameters:
     reportAlwaysTrueInLastCondition: true
     reportAnyTypeWideningInVarTag: true
     checkMissingOverrideMethodAttribute: true
+
+    ignoreErrors:
+    		-
+    			identifier: rector.noInstanceOfStaticReflection
