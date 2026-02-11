@@ -1,4 +1,4 @@
-# API Skeleton
+# TaskManager API
 
 ## Tech Stack & Code Quality
 
@@ -77,7 +77,7 @@ php bin/console doctrine:migrations:migrate --no-interaction
 ##### Step 4: Load Fixtures
 
 ```shell
-php bin/console doctrine:fixtures:load --no-interaction --purge-with-truncate
+php bin/console doctrine:fixtures:load --no-interaction
 ```
 
 ### Static Code Analysis & Formatting
