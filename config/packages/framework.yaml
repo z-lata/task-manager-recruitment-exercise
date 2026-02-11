@@ -14,7 +14,7 @@ framework:
                 'Content-Type': 'application/json'
         
         scoped_clients:
-            jsonPlaceholder.client:
+            jsonPlaceholder.httpClient:
                 base_uri: '%env(JSON_PLACEHOLDER_BASE_URL)%'
 
     # Note that the session will be started ONLY if you read or write from it.

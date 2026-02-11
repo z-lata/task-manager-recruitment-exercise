@@ -17,7 +17,7 @@ use Throwable;
 final readonly class JsonPlaceholderClient implements JsonPlaceholderClientInterface
 {
     public function __construct(
-        private HttpClientInterface $httpClient,
+        private HttpClientInterface $jsonPlaceholderHttpClient,
         private SerializerInterface $serializer,
         private LoggerInterface $logger,
     ) {
@@ -27,7 +27,7 @@ final readonly class JsonPlaceholderClient implements JsonPlaceholderClientInter
     public function fetchUsers(): array
     {
         try {
-            $response = $this->httpClient->request(method: Request::METHOD_GET, url: '/users');
+            $response = $this->jsonPlaceholderHttpClient->request(method: Request::METHOD_GET, url: 'users');
 
             return $this->serializer->deserialize(
                 $response->getContent(),
