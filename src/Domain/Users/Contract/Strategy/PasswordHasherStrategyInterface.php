@@ -10,9 +10,5 @@ interface PasswordHasherStrategyInterface
 {
     public function hash(#[SensitiveParameter] string $plainPassword): string;
 
-    public function verify(
-        string $hashedPassword,
-        #[SensitiveParameter]
-        string $plainPassword,
-    ): bool;
+    public function verify(string $hashedPassword, #[SensitiveParameter] string $plainPassword): bool;
 }

@@ -10,9 +10,5 @@ use SensitiveParameter;
 
 interface UserFactoryInterface
 {
-    public function createFromDTO(
-        UserDTO $userDTO,
-        #[SensitiveParameter]
-        string $plainPassword,
-    ): User;
+    public function createFromDTO(UserDTO $userDTO, #[SensitiveParameter] string $plainPassword): User;
 }
