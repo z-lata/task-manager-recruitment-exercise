@@ -31,6 +31,12 @@ parameters:
 			path: config/bootstrap.php
 
 		-
+			rawMessage: Multiple class/interface/trait is not allowed in single file
+			identifier: symplify.multipleClassLikeInFile
+			count: 1
+			path: config/reference.php
+
+		-
 			rawMessage: Offset 'APP_DEBUG' might not exist on array.
 			identifier: offsetAccess.notFound
 			count: 1
@@ -59,33 +65,3 @@ parameters:
 			identifier: staticMethod.dynamicCall
 			count: 1
 			path: tests/Api/GreetingsTest.php
-
-		-
-			rawMessage: 'Call to function method_exists() with ''Symfony\\Component\\Dotenv\\Dotenv'' and ''bootEnv'' will always evaluate to true.'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: tests/bootstrap.php
-
-		-
-			rawMessage: 'Function "method_exists()" cannot be used/left in the code'
-			identifier: symplify.forbiddenFuncCall
-			count: 1
-			path: tests/bootstrap.php
-
-		-
-			rawMessage: 'Function "method_exists()" cannot be used/left in the code: use ReflectionProvider->has*() instead'
-			identifier: symplify.forbiddenFuncCall
-			count: 1
-			path: tests/bootstrap.php
-
-		-
-			rawMessage: Offset 'APP_DEBUG' might not exist on array<mixed>.
-			identifier: offsetAccess.notFound
-			count: 1
-			path: tests/bootstrap.php
-
-		-
-			rawMessage: 'Only booleans are allowed in an if condition, mixed given.'
-			identifier: if.condNotBoolean
-			count: 1
-			path: tests/bootstrap.php
