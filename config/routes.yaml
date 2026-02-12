@@ -10,6 +10,10 @@
 controllers:
     resource: routing.controllers
 
+api_graphql_entrypoint:
+    path: /graphql
+    controller: api_platform.graphql.action.entrypoint
+
 auth:
     path: /api/auth/token
     methods: ["POST"]

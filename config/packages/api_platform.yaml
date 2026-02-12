@@ -7,6 +7,11 @@ api_platform:
         cache_headers:
             vary: ['Content-Type', 'Authorization', 'Origin']
     
+    formats:
+        json: ["application/json"]
+        jsonld: ["application/ld+json"]
+        graphql: ["application/graphql"]
+    
     swagger:
         api_keys:
             JWT:
