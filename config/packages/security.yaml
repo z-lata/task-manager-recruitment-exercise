@@ -1,14 +1,14 @@
 security:
     # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:
-        App\Domain\Users\Entity\User: 'auto'
+        App\Infrastructure\Users\Persistence\Doctrine\Entity\User: 'auto'
 
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
         users:
             entity:
-                class: App\Domain\Users\Entity\User
-                property: email
+                class: App\Infrastructure\Users\Persistence\Doctrine\Entity\User
+                property: username
 
     firewalls:
         dev:
@@ -20,7 +20,7 @@ security:
             stateless: true
             json_login:
                 check_path: /api/auth/token
-                username_path: email
+                username_path: username
                 password_path: password
                 success_handler: lexik_jwt_authentication.handler.authentication_success
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
@@ -42,7 +42,8 @@ security:
         - { path: ^/$, roles: PUBLIC_ACCESS } # Allows accessing the Swagger UI
         - { path: ^/docs, roles: PUBLIC_ACCESS } # Allows accessing API documentations and Swagger UI docs
         - { path: ^/contexts, roles: PUBLIC_ACCESS } # Allows accessing the Swagger UI contexts
-        - { path: ^/api/auth, roles: PUBLIC_ACCESS }
+        - { path: ^/api/auth, roles: PUBLIC_ACCESS, methods: [POST] }
+        - { path: ^/api/users, roles: PUBLIC_ACCESS, methods: [POST] }
         - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
         - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
 
