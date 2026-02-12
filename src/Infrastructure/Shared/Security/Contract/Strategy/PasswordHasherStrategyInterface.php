@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Users\Contract\Strategy;
+namespace App\Infrastructure\Shared\Security\Contract\Strategy;
 
 use SensitiveParameter;
 

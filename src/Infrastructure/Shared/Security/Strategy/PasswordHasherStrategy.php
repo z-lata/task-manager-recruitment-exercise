@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Shared\Security\Strategy;
 
-use App\Domain\Users\Contract\Strategy\PasswordHasherStrategyInterface;
+use App\Infrastructure\Shared\Security\Contract\Strategy\PasswordHasherStrategyInterface;
 use Override;
 use SensitiveParameter;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
