@@ -44,6 +44,18 @@ docker compose down --remove-orphans -v
 docker exec -it api bash
 ```
 
+### Automatic Setup on Docker Start
+
+When the Docker container starts, the `docker-entrypoint.sh` script automatically:
+
+* **Creates the database** (if it doesn't exist)
+* **Runs migrations** – Applies all pending database migrations from the `/migrations` directory
+* **Loads fixtures** – In development environment (`APP_ENV != prod`), automatically loads test data from fixtures
+
+This ensures that your development environment is fully set up and ready to use immediately after running `docker compose up`.
+
+> **Note:** Fixtures are only loaded in development mode. For production environments, migrations run without loading test data.
+
 ### Loading Dummy Data
 
 Load test users from the API [JSONPlaceholder](https://jsonplaceholder.typicode.com/):
