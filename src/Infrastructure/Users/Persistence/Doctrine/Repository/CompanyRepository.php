@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure\Users\Persistence\Doctrine;
+namespace App\Infrastructure\Users\Persistence\Doctrine\Repository;
 
-use App\Domain\Users\Contract\Repository\CompanyRepositoryInterface;
-use App\Domain\Users\Entity\Company;
+use App\Infrastructure\Users\Persistence\Doctrine\Contract\Repository\CompanyRepositoryInterface;
+use App\Infrastructure\Users\Persistence\Doctrine\Entity\Company;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

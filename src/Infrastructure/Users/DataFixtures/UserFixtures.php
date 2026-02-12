@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Users\DataFixtures;
 
-use App\Domain\Users\Contract\Factory\UserFactoryInterface;
-use App\Domain\Users\Contract\Repository\UserRepositoryInterface;
 use App\Infrastructure\Shared\HttpClient\JsonPlaceholder\Contract\JsonPlaceholderClientInterface;
+use App\Infrastructure\Users\Persistence\Doctrine\Contract\Factory\UserFactoryInterface;
+use App\Infrastructure\Users\Persistence\Doctrine\Contract\Repository\UserRepositoryInterface;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Override;
@@ -29,10 +29,12 @@ final class UserFixtures extends Fixture
             return;
         }
 
+        $plainPassword = 'Admin3579!';
+        $roles = ['ROLE_USER'];
+
         foreach ($fakeUsers as $fakeUser) {
-            $plainPassword = 'Admin1234#';
-            $user = $this->userFactory->createFromDTO($fakeUser, $plainPassword);
-            $this->userRepository->save($user);
+            $user = $this->userFactory->createFromExternalDTO($fakeUser, $plainPassword, $roles);
+            $this->userRepository->saveUser($user);
         }
     }
 }

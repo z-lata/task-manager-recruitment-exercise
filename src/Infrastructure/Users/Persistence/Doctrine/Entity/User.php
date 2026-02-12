@@ -2,13 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Users\Entity;
+namespace App\Infrastructure\Users\Persistence\Doctrine\Entity;
 
-use App\Infrastructure\Users\Persistence\Doctrine\UserRepository;
+use App\Infrastructure\Users\Persistence\Doctrine\Repository\UserRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use LogicException;
 use Override;
+use SensitiveParameter;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Uid\Uuid;
@@ -27,18 +28,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(name: 'uuid', type: Types::GUID, unique: true, nullable: false)]
     private string $uuid;
 
+    /**
+     * @var string[]
+     */
+    #[ORM\Column(name: 'roles', type: Types::JSON, nullable: false)]
+    private array $roles = [];
+
     public function __construct(
         #[ORM\Column(name: 'name', type: Types::STRING, length: 255, nullable: false)]
         private string $name,
-        #[ORM\Column(name: 'username', type: Types::STRING, length: 255, nullable: false)]
+        #[ORM\Column(name: 'username', type: Types::STRING, length: 255, unique: true, nullable: false)]
         private string $username,
-        #[ORM\Column(name: 'email', type: Types::STRING, length: 255, unique: true, nullable: false)]
-        private string $email,
         /**
          * Stored as hashed password.
          */
+        #[SensitiveParameter]
         #[ORM\Column(name: 'password', type: Types::STRING, nullable: false)]
         private string $password,
+        #[ORM\Column(name: 'email', type: Types::STRING, length: 255, unique: true, nullable: false)]
+        private string $email,
         #[ORM\Column(name: 'phone', type: Types::STRING, length: 30, nullable: false)]
         private string $phone,
         #[ORM\Column(name: 'website', type: Types::STRING, nullable: false)]
@@ -47,7 +55,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         #[ORM\JoinColumn(name: 'address_id', referencedColumnName: 'id', nullable: false)]
         #[ORM\JoinTable(name: 'address', schema: 'users')]
         private Address $address,
-        #[ORM\ManyToOne(targetEntity: Company::class)]
+        #[ORM\OneToOne(targetEntity: Company::class, cascade: ['persist', 'remove'])]
         #[ORM\JoinColumn(name: 'company_id', referencedColumnName: 'id', nullable: false)]
         #[ORM\JoinTable(name: 'company', schema: 'users')]
         private Company $company,
@@ -75,15 +83,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->username;
     }
 
-    public function getEmail(): string
-    {
-        return $this->email;
-    }
-
     #[Override]
     public function getPassword(): string
     {
         return $this->password;
+    }
+
+    public function getEmail(): string
+    {
+        return $this->email;
     }
 
     public function getPhone(): string
@@ -112,7 +120,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Override]
     public function getRoles(): array
     {
-        return ['ROLE_USER'];
+        return $this->roles;
+    }
+
+    /**
+     * @param string[] $roles
+     */
+    public function setRoles(array $roles): void
+    {
+        $this->roles = $roles;
+    }
+
+    public function addRole(string $role): void
+    {
+        $this->roles[] = $role;
+    }
+
+    public function removeRole(string $role): void
+    {
+        $this->roles = array_diff($this->roles, [$role]);
     }
 
     #[Override]
@@ -127,10 +153,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Override]
     public function getUserIdentifier(): string
     {
-        if ('' === $this->email) {
-            throw new LogicException('User email cannot be empty.');
+        if ('' === $this->username) {
+            throw new LogicException('Username cannot be empty.');
         }
 
-        return $this->email;
+        return $this->username;
     }
 }

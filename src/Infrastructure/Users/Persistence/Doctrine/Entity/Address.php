@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Users\Entity;
+namespace App\Infrastructure\Users\Persistence\Doctrine\Entity;
 
-use App\Domain\Users\Entity\ValueObject\Geo;
-use App\Infrastructure\Users\Persistence\Doctrine\AddressRepository;
+use App\Infrastructure\Users\Persistence\Doctrine\Entity\ValueObject\Geo;
+use App\Infrastructure\Users\Persistence\Doctrine\Repository\AddressRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Users\Entity;
+namespace App\Infrastructure\Users\Persistence\Doctrine\Entity;
 
-use App\Infrastructure\Users\Persistence\Doctrine\CompanyRepository;
+use App\Infrastructure\Users\Persistence\Doctrine\Repository\CompanyRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;

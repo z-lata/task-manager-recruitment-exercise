@@ -14,10 +14,10 @@ doctrine:
             Doctrine\DBAL\Platforms\PostgreSQLPlatform: identity
         auto_mapping: true
         mappings:
-            Domain:
+            Infrastructure:
                 type: attribute
-                dir: '%kernel.project_dir%/src/Domain'
-                prefix: 'App\Domain'
+                dir: '%kernel.project_dir%/src/Infrastructure'
+                prefix: 'App\Infrastructure'
         controller_resolver:
             auto_mapping: false
 
