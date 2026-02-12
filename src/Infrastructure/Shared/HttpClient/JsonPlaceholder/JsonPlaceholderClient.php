@@ -35,7 +35,7 @@ final readonly class JsonPlaceholderClient implements JsonPlaceholderClientInter
                 JsonEncoder::FORMAT,
             );
         } catch (Throwable $throwable) {
-            $this->logger->error('Failed to fetch users: ' . $throwable->getMessage());
+            $this->logger->error('Failed to fetch users.' . $throwable->getMessage());
 
             return [];
         }
