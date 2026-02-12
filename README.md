@@ -56,6 +56,10 @@ This ensures that your development environment is fully set up and ready to use 
 
 > **Note:** Fixtures are only loaded in development mode. For production environments, migrations run without loading test data.
 
+#### Default Test User Credentials
+
+All test users are created with the following default password: `Admin3579!`
+
 ### Loading Dummy Data
 
 Load test users from the API [JSONPlaceholder](https://jsonplaceholder.typicode.com/):
