@@ -60,6 +60,16 @@ This ensures that your development environment is fully set up and ready to use 
 
 All test users are created with the following default password: `Admin3579!`
 
+**Standard User**
+
+* username: `j.kwiatkowski`
+* password: `Admin3579!`
+
+**Admin User**
+
+* username: `admin`
+* password: `Admin3579!`
+
 ### Loading Dummy Data
 
 Load test users from the API [JSONPlaceholder](https://jsonplaceholder.typicode.com/):
