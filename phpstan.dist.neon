@@ -53,6 +53,7 @@ parameters:
     reportAlwaysTrueInLastCondition: true
     reportAnyTypeWideningInVarTag: true
     checkMissingOverrideMethodAttribute: true
+    treatPhpDocTypesAsCertain: false
 
     ignoreErrors:
     		-
