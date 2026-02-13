@@ -38,4 +38,12 @@ final class TaskRepository extends ServiceEntityRepository implements TaskReposi
             'uuid' => $uuid,
         ]);
     }
+
+    #[Override]
+    public function fetchTasksAssignedToUser(string $userUuid): array
+    {
+        return $this->findBy([
+            'assignedUserUuid' => $userUuid,
+        ]);
+    }
 }

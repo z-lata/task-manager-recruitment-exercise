@@ -11,4 +11,9 @@ interface TaskRepositoryInterface
     public function saveTask(Task $task): void;
 
     public function findTaskByUuid(string $uuid): ?Task;
+
+    /**
+     * @return Task[]
+     */
+    public function fetchTasksAssignedToUser(string $userUuid): array;
 }

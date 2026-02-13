@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Tasks\Persistence\Store;
 
+use App\Application\Tasks\DTO\Model\TaskDTO;
 use App\Infrastructure\Tasks\Persistence\Doctrine\Contract\Factory\TaskFactoryInterface;
 use App\Infrastructure\Tasks\Persistence\Doctrine\Contract\Repository\TaskRepositoryInterface;
 use App\Infrastructure\Tasks\Persistence\Doctrine\Entity\Task;
@@ -31,5 +32,15 @@ final readonly class TasksStore
     public function findTaskByUuid(string $uuid): ?Task
     {
         return $this->taskRepository->findTaskByUuid($uuid);
+    }
+
+    /**
+     * @return TaskDTO[]
+     */
+    public function fetchTasksAssignedToUser(string $userUuid): array
+    {
+        $tasks = $this->taskRepository->fetchTasksAssignedToUser($userUuid);
+
+        return array_map(callback: $this->taskFactory->createTaskDTOFromEntity(...), array: $tasks);
     }
 }

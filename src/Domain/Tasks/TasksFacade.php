@@ -4,15 +4,17 @@ declare(strict_types=1);
 
 namespace App\Domain\Tasks;
 
+use App\Application\Tasks\DTO\Model\TaskDTO;
 use App\Domain\Tasks\Contract\Service\ChangeTaskStatusServiceInterface;
 use App\Domain\Tasks\Contract\Service\CreateTaskServiceInterface;
+use App\Infrastructure\Tasks\Persistence\Store\TasksStore;
 
 final readonly class TasksFacade
 {
     public function __construct(
         private CreateTaskServiceInterface $createTaskService,
         private ChangeTaskStatusServiceInterface $changeTaskStatusService,
-        // private TasksStore $tasksStore,
+        private TasksStore $tasksStore,
     ) {
     }
 
@@ -28,5 +30,13 @@ final readonly class TasksFacade
             taskUuid: $taskUuid,
             status: $status,
         );
+    }
+
+    /**
+     * @return TaskDTO[]
+     */
+    public function fetchTasksAssignedToUser(string $userUuid): array
+    {
+        return $this->tasksStore->fetchTasksAssignedToUser($userUuid);
     }
 }
