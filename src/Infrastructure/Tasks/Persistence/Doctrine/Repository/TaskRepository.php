@@ -40,7 +40,7 @@ final class TaskRepository extends ServiceEntityRepository implements TaskReposi
     }
 
     #[Override]
-    public function fetchTasksAssignedToUser(string $userUuid): array
+    public function findTasksAssignedToUser(string $userUuid): array
     {
         return $this->findBy([
             'assignedUserUuid' => $userUuid,
@@ -48,7 +48,7 @@ final class TaskRepository extends ServiceEntityRepository implements TaskReposi
     }
 
     #[Override]
-    public function fetchTasks(): array
+    public function findTasks(): array
     {
         return $this->findAll();
     }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Tasks;
 
+use App\Application\Tasks\DTO\Model\TaskDetailsDTO;
 use App\Application\Tasks\DTO\Model\TaskDTO;
 use App\Domain\Tasks\Contract\Service\ChangeTaskStatusServiceInterface;
 use App\Domain\Tasks\Contract\Service\CreateTaskServiceInterface;
@@ -46,5 +47,17 @@ final readonly class TasksFacade
     public function fetchTasks(): array
     {
         return $this->tasksStore->fetchTasks();
+    }
+
+    public function fetchTaskDetailsAssignedToUser(
+        string $taskUuid,
+        string $userUuid,
+        bool $isAdmin,
+    ): TaskDetailsDTO {
+        return $this->tasksStore->fetchTaskDetailsAssignedToUser(
+            taskUuid: $taskUuid,
+            userUuid: $userUuid,
+            isAdmin: $isAdmin,
+        );
     }
 }

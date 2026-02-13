@@ -30,4 +30,12 @@ final class EventRepository extends ServiceEntityRepository implements EventRepo
             ->flush()
         ;
     }
+
+    #[Override]
+    public function findEventsByResourceUuid(string $resourceUuid): array
+    {
+        return $this->findBy([
+            'resourceUuid' => $resourceUuid,
+        ]);
+    }
 }
