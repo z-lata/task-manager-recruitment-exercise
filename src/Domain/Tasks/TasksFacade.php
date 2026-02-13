@@ -39,4 +39,12 @@ final readonly class TasksFacade
     {
         return $this->tasksStore->fetchTasksAssignedToUser($userUuid);
     }
+
+    /**
+     * @return TaskDTO[]
+     */
+    public function fetchTasks(): array
+    {
+        return $this->tasksStore->fetchTasks();
+    }
 }

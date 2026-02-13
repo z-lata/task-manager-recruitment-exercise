@@ -16,4 +16,9 @@ interface TaskRepositoryInterface
      * @return Task[]
      */
     public function fetchTasksAssignedToUser(string $userUuid): array;
+
+    /**
+     * @return Task[]
+     */
+    public function fetchTasks(): array;
 }

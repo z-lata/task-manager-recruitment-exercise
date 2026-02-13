@@ -43,4 +43,14 @@ final readonly class TasksStore
 
         return array_map(callback: $this->taskFactory->createTaskDTOFromEntity(...), array: $tasks);
     }
+
+    /**
+     * @return TaskDTO[]
+     */
+    public function fetchTasks(): array
+    {
+        $tasks = $this->taskRepository->fetchTasks();
+
+        return array_map(callback: $this->taskFactory->createTaskDTOFromEntity(...), array: $tasks);
+    }
 }
