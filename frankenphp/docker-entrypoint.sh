@@ -6,6 +6,8 @@ if [ "$1" = 'frankenphp' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
 		composer install --prefer-dist --no-progress --no-interaction
 	fi
 
+	git config --global --add safe.directory /app
+
 	if [ "$APP_ENV" != 'prod' ]; then
 		echo "Making sure public / private keys for JWT exist..."
 		php bin/console lexik:jwt:generate-keypair --skip-if-exists --no-interaction
