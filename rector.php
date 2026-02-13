@@ -6,13 +6,10 @@ use Rector\Caching\ValueObject\Storage\FileCacheStorage;
 use Rector\Config\RectorConfig;
 
 return RectorConfig::configure()
-    ->withPaths([__DIR__ . '/config', __DIR__ . '/public', __DIR__ . '/src', __DIR__ . '/tests'])
+    ->withPaths([__DIR__ . '/src', __DIR__ . '/tests'])
     ->withRootFiles()
     ->withSymfonyContainerXml(__DIR__ . '/var/cache/dev/App_KernelDevDebugContainer.xml')
     ->withSymfonyContainerPhp(__DIR__ . '/var/cache/dev/App_KernelDevDebugContainer.php')
-//    ->withPHPStanConfigs([
-//        __DIR__ . '/phpstan.dist.neon',
-//    ])
     ->withCache(cacheDirectory: __DIR__ . '/var/build/rector', cacheClass: FileCacheStorage::class)
     ->withParallel(timeoutSeconds: 300, maxNumberOfProcess: 8, jobSize: 50)
     ->withIndent()

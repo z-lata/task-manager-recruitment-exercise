@@ -12,14 +12,10 @@ use PhpCsFixer\Fixer\Operator\ConcatSpaceFixer;
 use Symplify\EasyCodingStandard\Config\ECSConfig;
 
 return ECSConfig::configure()
-    ->withPaths([__DIR__ . '/config', __DIR__ . '/public', __DIR__ . '/src', __DIR__ . '/tests'])
+    ->withPaths([__DIR__ . '/src', __DIR__ . '/tests'])
     ->withRootFiles()
     ->withCache(directory: __DIR__ . '/var/build/ecs', namespace: getcwd())
     ->withParallel(timeoutSeconds: 300, maxNumberOfProcess: 8, jobSize: 50)
-//    ->withSpacing(
-//        indentation: Option::INDENTATION_SPACES,
-//        lineEnding: PHP_EOL
-//    )
     ->withEditorConfig()
     ->withPreparedSets(psr12: true, common: true, symplify: true, strict: true, cleanCode: true)
     ->withPhpCsFixerSets(doctrineAnnotation: true, phpCsFixer: true, symfony: true)
