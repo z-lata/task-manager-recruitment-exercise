@@ -11,18 +11,30 @@ use Override;
 
 final readonly class CompanyFactory implements CompanyFactoryInterface
 {
-    private function createFromParams(string $name, string $catchPhrase, string $bs): Company
+    #[Override]
+    public function createCompany(string $name, string $catchPhrase, string $bs): Company
     {
         return new Company(name: $name, catchPhrase: $catchPhrase, bs: $bs);
     }
 
     #[Override]
-    public function createFromInternalDTO(InternalCompanyDTO $companyDTO): Company
+    public function createCompanyFromInternalDTO(InternalCompanyDTO $companyDTO): Company
     {
-        return $this->createFromParams(
+        return $this->createCompany(
             name: $companyDTO->getName(),
             catchPhrase: $companyDTO->getCatchPhrase(),
             bs: $companyDTO->getBs(),
+        );
+    }
+
+    #[Override]
+    public function createInternalCompanyDTOFromEntity(Company $company): InternalCompanyDTO
+    {
+        return new InternalCompanyDTO(
+            name: $company->getName(),
+            catchPhrase: $company->getCatchPhrase(),
+            bs: $company->getBs(),
+            uuid: $company->getUuid(),
         );
     }
 }

@@ -4,23 +4,23 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Users\Persistence\Doctrine\Factory;
 
-use App\Application\Users\DTO\Model\AddressDTO as InternalAddressDTO;
-use App\Application\Users\DTO\Model\CompanyDTO as InternalCompanyDTO;
-use App\Application\Users\DTO\Model\GeoDTO as InternalGeoDTO;
 use App\Application\Users\DTO\Model\UserDTO as InternalUserDTO;
 use App\Infrastructure\Shared\HttpClient\JsonPlaceholder\DTO\Model\UserDTO as ExternalUserDTO;
 use App\Infrastructure\Shared\Security\Contract\Strategy\PasswordHasherStrategyInterface;
+use App\Infrastructure\Users\Persistence\Doctrine\Contract\Factory\AddressFactoryInterface;
+use App\Infrastructure\Users\Persistence\Doctrine\Contract\Factory\CompanyFactoryInterface;
 use App\Infrastructure\Users\Persistence\Doctrine\Contract\Factory\UserFactoryInterface;
 use App\Infrastructure\Users\Persistence\Doctrine\Entity\Address;
 use App\Infrastructure\Users\Persistence\Doctrine\Entity\Company;
 use App\Infrastructure\Users\Persistence\Doctrine\Entity\User;
-use App\Infrastructure\Users\Persistence\Doctrine\Entity\ValueObject\Geo;
 use Override;
 use SensitiveParameter;
 
 final readonly class UserFactory implements UserFactoryInterface
 {
     public function __construct(
+        private AddressFactoryInterface $addressFactory,
+        private CompanyFactoryInterface $companyFactory,
         private PasswordHasherStrategyInterface $passwordHasherStrategy,
     ) {
     }
@@ -29,7 +29,7 @@ final readonly class UserFactory implements UserFactoryInterface
      * @param string[] $roles
      */
     #[Override]
-    public function createFromParams(
+    public function createUser(
         string $name,
         string $username,
         #[SensitiveParameter]
@@ -62,7 +62,7 @@ final readonly class UserFactory implements UserFactoryInterface
      * @param string[] $roles
      */
     #[Override]
-    public function createFromExternalDTO(
+    public function createUserFromExternalDTO(
         ExternalUserDTO $userDTO,
         #[SensitiveParameter]
         string $plainPassword,
@@ -70,23 +70,23 @@ final readonly class UserFactory implements UserFactoryInterface
     ): User {
         $addressDTO = $userDTO->getAddressDTO();
         $geoDTO = $addressDTO->getGeoDTO();
-        $geo = new Geo(lat: $geoDTO->getLat(), lng: $geoDTO->getLng());
-        $address = new Address(
+        $address = $this->addressFactory->createAddress(
             street: $addressDTO->getStreet(),
             suite: $addressDTO->getSuite(),
             city: $addressDTO->getCity(),
             zipcode: $addressDTO->getZipcode(),
-            geo: $geo,
+            lat: $geoDTO->getLat(),
+            lng: $geoDTO->getLng(),
         );
 
         $companyDTO = $userDTO->getCompanyDTO();
-        $company = new Company(
+        $company = $this->companyFactory->createCompany(
             name: $companyDTO->getName(),
             catchPhrase: $companyDTO->getCatchPhrase(),
             bs: $companyDTO->getBs(),
         );
 
-        return $this->createFromParams(
+        return $this->createUser(
             name: $userDTO->getName(),
             username: $userDTO->getUsername(),
             plainPassword: $plainPassword,
@@ -100,32 +100,18 @@ final readonly class UserFactory implements UserFactoryInterface
     }
 
     #[Override]
-    public function createFromEntity(User $user): InternalUserDTO
+    public function createInternalUserDTOFromEntity(User $user): InternalUserDTO
     {
         $address = $user->getAddress();
-        $geo = $address->getGeo();
-        $geoDTO = new InternalGeoDTO(lat: $geo->getLat(), lng: $geo->getLng());
-        $addressDTO = new InternalAddressDTO(
-            street: $address->getStreet(),
-            suite: $address->getSuite(),
-            city: $address->getCity(),
-            zipcode: $address->getZipcode(),
-            geo: $geoDTO,
-            uuid: $address->getUuid(),
-        );
+        $addressDTO = $this->addressFactory->createInternalAddressDTOFromEntity($address);
 
         $company = $user->getCompany();
-        $companyDTO = new InternalCompanyDTO(
-            name: $company->getName(),
-            catchPhrase: $company->getCatchPhrase(),
-            bs: $company->getBs(),
-            uuid: $company->getUuid(),
-        );
+        $companyDTO = $this->companyFactory->createInternalCompanyDTOFromEntity($company);
 
         return new InternalUserDTO(
             name: $user->getName(),
             username: $user->getUsername(),
-            password: '',
+            password: '********',
             email: $user->getEmail(),
             phone: $user->getPhone(),
             website: $user->getWebsite(),

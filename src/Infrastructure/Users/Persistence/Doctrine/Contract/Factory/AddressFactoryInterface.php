@@ -9,5 +9,16 @@ use App\Infrastructure\Users\Persistence\Doctrine\Entity\Address;
 
 interface AddressFactoryInterface
 {
-    public function createFromInternalDTO(InternalAddressDTO $addressDTO): Address;
+    public function createAddress(
+        string $street,
+        string $suite,
+        string $city,
+        string $zipcode,
+        string $lat,
+        string $lng,
+    ): Address;
+
+    public function createAddressFromInternalDTO(InternalAddressDTO $addressDTO): Address;
+
+    public function createInternalAddressDTOFromEntity(Address $address): InternalAddressDTO;
 }

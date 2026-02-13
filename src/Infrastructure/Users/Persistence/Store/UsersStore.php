@@ -26,9 +26,9 @@ final readonly class UsersStore
     public function createUser(UserDTO $userDTO): void
     {
         $roles = ['ROLE_USER'];
-        $address = $this->addressFactory->createFromInternalDTO($userDTO->getAddress());
-        $company = $this->companyFactory->createFromInternalDTO($userDTO->getCompany());
-        $user = $this->userFactory->createFromParams(
+        $address = $this->addressFactory->createAddressFromInternalDTO($userDTO->getAddress());
+        $company = $this->companyFactory->createCompanyFromInternalDTO($userDTO->getCompany());
+        $user = $this->userFactory->createUser(
             name: $userDTO->getName(),
             username: $userDTO->getUsername(),
             plainPassword: $userDTO->getPassword(),
@@ -71,7 +71,7 @@ final readonly class UsersStore
     {
         $user = $this->fetchCurrentUser();
 
-        return $this->userFactory->createFromEntity($user);
+        return $this->userFactory->createInternalUserDTOFromEntity($user);
     }
 
     /**
@@ -81,6 +81,6 @@ final readonly class UsersStore
     {
         $users = $this->userRepository->findUsers();
 
-        return array_map(callback: $this->userFactory->createFromEntity(...), array: $users);
+        return array_map(callback: $this->userFactory->createInternalUserDTOFromEntity(...), array: $users);
     }
 }

@@ -9,5 +9,9 @@ use App\Infrastructure\Users\Persistence\Doctrine\Entity\Company;
 
 interface CompanyFactoryInterface
 {
-    public function createFromInternalDTO(InternalCompanyDTO $companyDTO): Company;
+    public function createCompany(string $name, string $catchPhrase, string $bs): Company;
+
+    public function createCompanyFromInternalDTO(InternalCompanyDTO $companyDTO): Company;
+
+    public function createInternalCompanyDTOFromEntity(Company $company): InternalCompanyDTO;
 }

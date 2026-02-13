@@ -16,7 +16,7 @@ interface UserFactoryInterface
     /**
      * @param string[] $roles
      */
-    public function createFromParams(
+    public function createUser(
         string $name,
         string $username,
         #[SensitiveParameter]
@@ -32,12 +32,12 @@ interface UserFactoryInterface
     /**
      * @param string[] $roles
      */
-    public function createFromExternalDTO(
+    public function createUserFromExternalDTO(
         ExternalUserDTO $userDTO,
         #[SensitiveParameter]
         string $plainPassword,
         array $roles = [],
     ): User;
 
-    public function createFromEntity(User $user): InternalUserDTO;
+    public function createInternalUserDTOFromEntity(User $user): InternalUserDTO;
 }

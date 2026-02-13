@@ -16,11 +16,11 @@ use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 /**
  * @implements ProviderInterface<UserDTO>
  */
-class RetrieveUserProvider implements ProviderInterface
+final readonly class RetrieveUserProvider implements ProviderInterface
 {
     public function __construct(
-        private readonly LoggerInterface $logger,
-        private readonly UsersFacade $usersFacade,
+        private LoggerInterface $logger,
+        private UsersFacade $usersFacade,
     ) {
     }
 

@@ -33,7 +33,7 @@ final class UserFixtures extends Fixture
         $roles = ['ROLE_USER'];
 
         foreach ($fakeUsers as $fakeUser) {
-            $user = $this->userFactory->createFromExternalDTO($fakeUser, $plainPassword, $roles);
+            $user = $this->userFactory->createUserFromExternalDTO($fakeUser, $plainPassword, $roles);
             $this->userRepository->saveUser($user);
         }
     }

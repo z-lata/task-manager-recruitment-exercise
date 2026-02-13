@@ -17,11 +17,11 @@ use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 /**
  * @implements ProcessorInterface<UserDTO, Response>
  */
-class CreateUserProcessor implements ProcessorInterface
+final readonly class CreateUserProcessor implements ProcessorInterface
 {
     public function __construct(
-        private readonly LoggerInterface $logger,
-        private readonly UsersFacade $usersFacade,
+        private LoggerInterface $logger,
+        private UsersFacade $usersFacade,
     ) {
     }
 

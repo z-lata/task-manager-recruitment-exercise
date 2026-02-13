@@ -15,11 +15,11 @@ use Throwable;
 /**
  * @implements ProviderInterface<UserDTO>
  */
-class RetrieveUsersProvider implements ProviderInterface
+final readonly class RetrieveUsersProvider implements ProviderInterface
 {
     public function __construct(
-        private readonly LoggerInterface $logger,
-        private readonly UsersFacade $usersFacade,
+        private LoggerInterface $logger,
+        private UsersFacade $usersFacade,
     ) {
     }
 

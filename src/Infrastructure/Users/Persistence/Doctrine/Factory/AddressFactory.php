@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Infrastructure\Users\Persistence\Doctrine\Factory;
 
 use App\Application\Users\DTO\Model\AddressDTO as InternalAddressDTO;
+use App\Application\Users\DTO\Model\GeoDTO as InternalGeoDTO;
 use App\Infrastructure\Users\Persistence\Doctrine\Contract\Factory\AddressFactoryInterface;
 use App\Infrastructure\Users\Persistence\Doctrine\Entity\Address;
 use App\Infrastructure\Users\Persistence\Doctrine\Entity\ValueObject\Geo;
@@ -12,7 +13,8 @@ use Override;
 
 final readonly class AddressFactory implements AddressFactoryInterface
 {
-    private function createFromParams(
+    #[Override]
+    public function createAddress(
         string $street,
         string $suite,
         string $city,
@@ -26,9 +28,9 @@ final readonly class AddressFactory implements AddressFactoryInterface
     }
 
     #[Override]
-    public function createFromInternalDTO(InternalAddressDTO $addressDTO): Address
+    public function createAddressFromInternalDTO(InternalAddressDTO $addressDTO): Address
     {
-        return $this->createFromParams(
+        return $this->createAddress(
             street: $addressDTO->getStreet(),
             suite: $addressDTO->getSuite(),
             city: $addressDTO->getCity(),
@@ -37,6 +39,22 @@ final readonly class AddressFactory implements AddressFactoryInterface
                 ->getLat(),
             lng: $addressDTO->getGeo()
                 ->getLng(),
+        );
+    }
+
+    #[Override]
+    public function createInternalAddressDTOFromEntity(Address $address): InternalAddressDTO
+    {
+        $geo = $address->getGeo();
+        $geoDTO = new InternalGeoDTO(lat: $geo->getLat(), lng: $geo->getLng());
+
+        return new InternalAddressDTO(
+            street: $address->getStreet(),
+            suite: $address->getSuite(),
+            city: $address->getCity(),
+            zipcode: $address->getZipcode(),
+            geo: $geoDTO,
+            uuid: $address->getUuid(),
         );
     }
 }
